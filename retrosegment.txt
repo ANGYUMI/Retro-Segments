@@ -1,0 +1,22 @@
+//Probaly not the most elegant implementation you may have seen ...
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+	vec2 uv = fragCoord.xy / iResolution.xy;
+
+
+    uv = (uv * 2. - 1.);
+    uv.x *= iResolution.x / iResolution.y;
+    float arghs = float(uv.x < 0.);
+    float argh  = (atan (uv.y / uv.x) / 3.1415
+             + arghs
+             + 0.5)
+         / 2.;
+    argh += 0.001 * iTime;
+    argh = fract (argh);
+//    argh = fract (argh * 2. * (iTime - fract(iTime)));
+      argh = fract (argh * 400.); //400//900//1000
+    argh = float (argh > 0.5);
+    
+    fragColor = vec4(argh,argh,argh,1.0);
+}
